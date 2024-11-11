@@ -1,6 +1,7 @@
 "use strict";
 
 const jwt = require("jsonwebtoken");
+const secret = process.env.ACCESS_TOKEN;
 
 const generateToken = (user) => {
   const payload = {
@@ -8,8 +9,18 @@ const generateToken = (user) => {
     name: user.name,
   };
 
-  const secret = process.env.ACCESS_TOKEN;
   return jwt.sign(payload, secret);
 };
 
-module.exports = { generateToken };
+const verifyToken = (access_token) => {
+  try {
+    const user = jwt.verify(access_token, secret);
+    return user;
+  } catch (error) {
+    const newError = new Error("you need to login or register");
+    newError.status = 500;
+    throw newError;
+  }
+};
+
+module.exports = { generateToken, verifyToken };
