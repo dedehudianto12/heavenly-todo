@@ -1,8 +1,8 @@
 "use strict";
 
 const {
-  registerUser: registerUserController,
-  loginUser: loginUserController,
+  registerUser: registerUserUsecase,
+  loginUser: loginUserUsecase,
 } = require("../usecase/userUsecase");
 
 const registerUser = async (req, res, next) => {
@@ -16,7 +16,7 @@ const registerUser = async (req, res, next) => {
       });
     }
 
-    await registerUserController(name, email, password);
+    await registerUserUsecase(name, email, password);
 
     res.status(201).json({
       status: "Success",
@@ -36,7 +36,7 @@ const loginUser = async (req, res, next) => {
         message: "email and password is required",
       });
     }
-    const payload = await loginUserController(email, password);
+    const payload = await loginUserUsecase(email, password);
     res.status(200).json({
       status: "Success",
       message: "Success login User",

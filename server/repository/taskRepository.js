@@ -26,7 +26,31 @@ const getTasksByUser = async (userId) => {
   });
 };
 
+const getTaskById = async (id) => {
+  return prisma.task.findUnique({
+    where: { id },
+  });
+};
+
+const updateTaskById = async (id, title, dueDate, completed) => {
+  const dataToUpdate = {};
+  if (title !== undefined) dataToUpdate.title = title;
+  if (dueDate !== undefined) dataToUpdate.dueDate = new Date(dueDate);
+  if (completed !== undefined) dataToUpdate.completed = completed;
+
+  if (Object.keys(dataToUpdate).length > 0) {
+    return await prisma.task.update({
+      where: { id },
+      data: dataToUpdate,
+    });
+  } else {
+    throw new Error("No fields to update");
+  }
+};
+
 module.exports = {
   createTask,
   getTasksByUser,
+  getTaskById,
+  updateTaskById,
 };

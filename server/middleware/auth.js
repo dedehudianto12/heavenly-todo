@@ -1,6 +1,7 @@
 "use strict";
 
 const { verifyToken } = require("../helper/jwt");
+const { getTaskById } = require("../repository/taskRepository");
 
 const authentication = (req, res, next) => {
   try {
@@ -23,4 +24,28 @@ const authentication = (req, res, next) => {
   }
 };
 
-module.exports = { authentication };
+const authorization = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const task = await getTaskById(Number(id));
+    if (!task) {
+      return next({
+        status: 500,
+        message: "task not found",
+      });
+    }
+
+    if (task.userId != req.user.id) {
+      return next({
+        status: 500,
+        message: "you are not authorized",
+      });
+    }
+    req.taskId = id;
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { authentication, authorization };
