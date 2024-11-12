@@ -12,5 +12,6 @@ route.get("/", taskController.getTasksByUser);
 route.use("/:id", authorization);
 route.get("/:id", taskController.getTaskById);
 route.patch("/:id", taskController.updateTaskById);
+route.delete("/:id", taskController.deleteTaskById);
 
 module.exports = route;

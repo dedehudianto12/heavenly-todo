@@ -5,6 +5,7 @@ const {
   getTasksByUser: getTasksByUserUsecase,
   getTaskById: getTaskByIdUsecase,
   updateTaskById: updateTaskByIdUsecase,
+  deleteTaskById: deleteTaskByIdUsecase,
 } = require("../usecase/taskUsecase");
 
 const createTask = async (req, res, next) => {
@@ -79,9 +80,22 @@ const updateTaskById = async (req, res, next) => {
   }
 };
 
+const deleteTaskById = async (req, res, next) => {
+  try {
+    const deletedTask = await deleteTaskByIdUsecase(Number(req.taskId));
+    res.status(201).json({
+      status: "Success",
+      message: "Success delete a task",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   createTask,
   getTasksByUser,
   getTaskById,
   updateTaskById,
+  deleteTaskById,
 };

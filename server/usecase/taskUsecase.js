@@ -5,6 +5,7 @@ const {
   getTasksByUser: getTasksByUserRepository,
   getTaskById: getTaskByIdRepository,
   updateTaskById: updateTaskByIdRepository,
+  deleteTaskById: deleteTaskByIdRepository,
 } = require("../repository/taskRepository");
 
 const createTask = async (title, dueDate, userId) => {
@@ -48,9 +49,15 @@ const updateTaskById = async (id, title, dueDate, completed) => {
   return updateTask;
 };
 
+const deleteTaskById = async (id) => {
+  const deletedTask = await deleteTaskByIdRepository(id);
+  return deletedTask;
+};
+
 module.exports = {
   createTask,
   getTasksByUser,
   getTaskById,
   updateTaskById,
+  deleteTaskById,
 };
