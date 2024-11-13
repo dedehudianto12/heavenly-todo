@@ -27,14 +27,14 @@ const loginUser = async (email, password) => {
   const user = await findUserByEmail(email);
   if (!user) {
     const error = new Error("Email or password is wrong");
-    error.status = 402;
+    error.status = 400;
     throw error;
   }
 
   const isPasswordCorrect = checkPassword(password, user.password);
   if (!isPasswordCorrect) {
     const error = new Error("Email or password is wrong");
-    error.status = 402;
+    error.status = 400;
     throw error;
   }
 
