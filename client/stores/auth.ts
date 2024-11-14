@@ -1,5 +1,9 @@
 import { defineStore } from "pinia";
-import type { loginCredentials, loginPayload } from "../interface";
+import type {
+  loginCredentials,
+  loginPayload,
+  registerCredentials,
+} from "../interface";
 
 export const useAuthStore = defineStore("auth", {
   state: () => ({
@@ -42,10 +46,33 @@ export const useAuthStore = defineStore("auth", {
         };
       }
     },
+    async register(credentials: registerCredentials) {
+      try {
+        const config = useRuntimeConfig();
+        const baseUrl = config.public.apiBaseUrl;
+        await $fetch(`${baseUrl}/user/register`, {
+          method: "POST",
+          body: credentials,
+        });
+
+        return { success: true };
+      } catch (error: any) {
+        if (error.response) {
+          const errorData = error.response._data;
+          return {
+            success: false,
+            error: errorData.error || "Register Failed",
+          };
+        }
+        return {
+          success: false,
+          error: error instanceof Error ? error.message : "Register failed",
+        };
+      }
+    },
     checkAuth() {
       if (process.client) {
         const token = localStorage.getItem("token");
-        console.log(token);
         if (token) {
           this.token = token;
           return true;

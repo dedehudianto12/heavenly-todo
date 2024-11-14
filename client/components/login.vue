@@ -28,6 +28,7 @@
       >
         {{ isLoading ? "Logging in..." : "Login" }}
       </button>
+      <button @click="toggleView">Don't have an account? Register</button>
     </form>
   </div>
 </template>
@@ -66,6 +67,7 @@ const onSubmit = form.handleSubmit(async (values) => {
       toast({
         title: "Login Success",
         description: `Welcome ${result.user}`,
+        duration: 1000,
       });
     } else {
       toast({
@@ -84,6 +86,10 @@ const onSubmit = form.handleSubmit(async (values) => {
     isLoading.value = false;
   }
 });
+
+const props = defineProps<{
+  toggleView: () => void;
+}>();
 </script>
 
 <style scoped>

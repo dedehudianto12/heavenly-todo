@@ -1,5 +1,6 @@
 <template>
   <div class="auth h-screen">
+    <Taskbar />
     <slot />
     <Toaster />
   </div>

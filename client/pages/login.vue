@@ -1,9 +1,16 @@
 <template>
   <div class="w-full h-screen flex justify-center items-center justify-center">
-    <Login />
+    <Login v-if="isLogin" :toggleView="toggleView" />
+    <Register v-else :toggleView="toggleView" />
   </div>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+const isLogin = ref(true);
+
+function toggleView() {
+  isLogin.value = !isLogin.value;
+}
+</script>
 
 <style scoped></style>
