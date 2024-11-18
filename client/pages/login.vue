@@ -8,6 +8,10 @@
 <script lang="ts" setup>
 const isLogin = ref(true);
 
+definePageMeta({
+  layout: false,
+});
+
 function toggleView() {
   isLogin.value = !isLogin.value;
 }
