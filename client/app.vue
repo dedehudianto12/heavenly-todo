@@ -3,6 +3,7 @@
 <template>
   <div class="h-screen w-screen">
     <NuxtLayout>
+      <Toaster />
       <NuxtPage />
     </NuxtLayout>
   </div>

@@ -14,6 +14,9 @@ export default defineNuxtConfig({
     "@pinia/nuxt",
     "@vee-validate/nuxt",
   ],
+  plugins: [
+    '~/plugins/auth.ts'
+  ],
   shadcn: {
     prefix: "",
     componentDir: "./components/ui",

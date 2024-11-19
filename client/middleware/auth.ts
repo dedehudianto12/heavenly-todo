@@ -12,6 +12,7 @@ export default defineNuxtRouteMiddleware((to, from) => {
 
   if (process.client) {
     const token = localStorage.getItem("token");
+    const name = localStorage.getItem("name")
 
     if (!token) {
       return navigateTo("/login");
@@ -19,6 +20,10 @@ export default defineNuxtRouteMiddleware((to, from) => {
 
     if (token && !authStore.token) {
       authStore.token = token;
+    }
+
+    if (name && !authStore.name){
+      authStore.name  = name
     }
   }
 });
