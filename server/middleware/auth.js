@@ -5,8 +5,9 @@ const { getTaskById } = require("../repository/taskRepository");
 
 const authentication = (req, res, next) => {
   try {
-    const { access_token } = req.headers;
-    const user = verifyToken(access_token);
+    const { authorization } = req.headers;
+    const access_token = authorization.split(" ");
+    const user = verifyToken(access_token[1]);
     if (!user) {
       return next({
         status: 500,

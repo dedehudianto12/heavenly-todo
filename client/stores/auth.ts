@@ -8,28 +8,31 @@ import type {
 export const useAuthStore = defineStore("auth", {
   state: () => ({
     userId: "",
-    name:  "",
-    token:  "",
+    name: "",
+    token: "",
     isReady: false,
-    isInitialized: false
+    isInitialized: false,
   }),
+  getters: {
+    displayName: (state) => state.name || "Guest",
+  },
+
   actions: {
     async init() {
       try {
         if (process.client) {
-          const token = localStorage.getItem('token');
-          const name = localStorage.getItem('name');
+          const token = localStorage.getItem("token");
+          const name = localStorage.getItem("name");
           if (!token || !name) {
-            throw new Error('Missing auth data');
+            throw new Error("Missing auth data");
           }
-          
           this.token = token;
           this.name = name;
-          this.isReady = true;
         }
       } catch (error) {
         this.logout();
       } finally {
+        this.isReady = true;
         this.isInitialized = true;
       }
     },
@@ -49,10 +52,10 @@ export const useAuthStore = defineStore("auth", {
         this.userId = payload.user.id;
         this.name = payload.user.name;
         this.token = payload.access_token;
-        this.isReady = true
+        this.isReady = true;
 
         localStorage.setItem("token", this.token);
-        localStorage.setItem("name", this.name)
+        localStorage.setItem("name", this.name);
 
         return { success: true, user: this.name };
       } catch (error: any) {
@@ -94,25 +97,14 @@ export const useAuthStore = defineStore("auth", {
       }
     },
     logout() {
-      console.log("masuk")
       this.token = "";
-      (this.userId = ""), (this.name = ""), (this.isReady = false)
+      (this.userId = ""), (this.name = ""), (this.isReady = false);
       if (process.client) {
-        localStorage.removeItem('token');
-        localStorage.removeItem('userName');
+        localStorage.removeItem("token");
+        localStorage.removeItem("userName");
       }
-      
-      navigateTo('/login');
+
+      navigateTo("/login");
     },
-    // setAuth(token: string, userData: { name: string }) {
-    //   this.token = token;
-    //   this.name = userData.name;
-    //   this.isReady = true;
-      
-    //   if (process.client) {
-    //     localStorage.setItem('token', token);
-    //     localStorage.setItem('userName', userData.name);
-    //   }
-    // }
   },
 });

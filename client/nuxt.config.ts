@@ -13,6 +13,8 @@ export default defineNuxtConfig({
     "shadcn-nuxt",
     "@pinia/nuxt",
     "@vee-validate/nuxt",
+    "nuxt-lucide-icons",
+    "nuxt-time",
   ],
   plugins: [
     '~/plugins/auth.ts'

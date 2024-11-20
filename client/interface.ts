@@ -19,3 +19,10 @@ export interface loginPayload {
   access_token: string;
   user: user;
 }
+
+export interface task {
+  id?: number;
+  title: string;
+  dueDate: string;
+  completed?: boolean;
+}

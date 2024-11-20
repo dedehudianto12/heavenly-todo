@@ -1,16 +1,15 @@
 <template>
-  <div class="relative min-h-screen bg-container">
-    <div>
-      <Taskbar/>
-      <slot/>
+  <div class="flex flex-row relative min-h-screen bg-container">
+    <div class="basis-1/5 w-64 min-h-full p-6">
+      <SideBar />
+    </div>
+    <div class="flex-auto p-6">
+      <slot />
     </div>
   </div>
 </template>
 
-<script lang="ts" setup>
-import { useAuthStore } from '@/stores/auth'
-const authStore = useAuthStore()
-</script>
+<script lang="ts" setup></script>
 
 <style scoped>
 .bg-container {
@@ -19,12 +18,5 @@ const authStore = useAuthStore()
   background-position: center;
   background-repeat: no-repeat;
   z-index: 0;
-}
-
-.bg-container::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 1;
 }
 </style>
