@@ -17,10 +17,15 @@ const createTask = async (req, res, next) => {
         message: "title and dueDate are required",
       });
     }
-    await createTaskUsecase(title, new Date(dueDate), req.user.id);
+    const newTask = await createTaskUsecase(
+      title,
+      new Date(dueDate),
+      req.user.id
+    );
     res.status(201).json({
       status: "Success",
       message: "Success add new task",
+      payload: newTask,
     });
   } catch (error) {
     next(error);
